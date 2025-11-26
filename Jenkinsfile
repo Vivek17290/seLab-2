@@ -12,7 +12,7 @@ pipeline {
             steps {
                 script {
                     // Assuming dependencies are already installed on Jenkins
-                    sh 'pytest test_app.py'  // Run the tests directly without setting up the virtual environment
+                    sh 'pytest tests/test_app.py'  // Run the tests directly without setting up the virtual environment
                 }
             }
         }
@@ -27,3 +27,4 @@ pipeline {
         }
     }
 }
+
