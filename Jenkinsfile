@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        VIRTUAL_ENV = 'venv'
+    }
+
     stages {
         stage('Checkout') {
             steps {
@@ -35,6 +39,9 @@ pipeline {
     }
 
     post {
+        always {
+            cleanWs() 
+        }
         success {
             echo 'Build and tests passed! Sending success notification.'
         }
