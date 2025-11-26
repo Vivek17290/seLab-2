@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        VIRTUAL_ENV = 'venv' 
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -12,12 +8,19 @@ pipeline {
             }
         }
 
-        stage('Set Up Virtual Environment') {
+        stage('Build') {
             steps {
                 script {
-                    sh 'python -m venv $VIRTUAL_ENV'
-                    sh './$VIRTUAL_ENV/bin/pip install --upgrade pip'
-                    sh './$VIRTUAL_ENV/bin/pip install -r requirements.txt'
+                    echo "Building the Flask application..."
+                }
+            }
+        }
+
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    sh 'pip install --upgrade pip'
+                    sh 'pip install -r requirements.txt'
                 }
             }
         }
@@ -25,7 +28,7 @@ pipeline {
         stage('Run Tests') {
             steps {
                 script {
-                    sh './$VIRTUAL_ENV/bin/pytest test_app.py'
+                    sh 'pytest test_app.py'
                 }
             }
         }
